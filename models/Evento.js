@@ -13,13 +13,20 @@ const EventoSchema = Schema({
 		require: true
 	},
 	end: {
-		type: String,
+		type: Date,
 		require: true
 	},
 	user: {
 		type: Schema.Types.ObjectId,
-		ref: 'Usuario'
+		ref: 'Usuario',
+		require: true
 	}
+});
+
+EventoSchema.method('toJSON', function () {
+	const { __v, _id, ...object } = this.toObject();
+	object.id = _id;
+	return object;
 });
 
 module.exports = model('Evento', EventoSchema);
